@@ -61,11 +61,22 @@ void print_dist_list( std::vector<mat> & dist_list,  int na_input, int na, int k
 
   return;
 }
-void read_data(){
+
+void read_dist(mat & dist, int n){
+  string filename="data/dist-size-"+to_string(n)+".mtx";
+
+  if (fopen(filename.c_str(), "r") == NULL) {
+    cout<<"file open fail:"<<filename<<endl;
+  }else{
+    dist = MM_to_mat(filename); 
+  }
+  return ;
 }
 
-void write_data(){
-
+void write_dist(mat dist, int n){
+  string filename="data/dist-size-"+to_string(n)+".mtx";
+  mat_to_MM(dist,filename);
+  return;
 }
 
 
@@ -126,6 +137,7 @@ int main(int args, char ** argv){
   for ( int i =0; i<MAX_SIZE; i++){
     mat distance(MAX_SIZE+1,MAX_SIZE+1);
     distance.zeros();
+    read_dist(distance, i);   
     std::cout<<" i = "<<i<<std::endl;
     dist_list.push_back(distance);
   }
@@ -173,12 +185,15 @@ int main(int args, char ** argv){
       }
       */
       //      cout<<daz<<","<<d[na][ka][dax][1]<<endl;
-      if ( daz > d[na][ka][dax][1] ){
+      //      if ( daz > d[na][ka][dax][1] ){
+      if ( daz > dist_list[na].get(ka,dax)){
 	d[na][ka][dax][1] = daz;
 	print_array(d,n_high, na,ka,dax, daz);
 	//	cout<<"debug 2"<<endl;
 	dist_list[na].set(ka,dax,daz);
 	print_dist_list(  dist_list ,n_high, na,ka,dax, daz);
+
+	write_dist(dist_list[na], na);
 	//	cout<<"debug 3"<<endl;
       }
 
