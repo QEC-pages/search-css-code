@@ -34,8 +34,12 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
   case 1:{ //markdown table
     
     for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){
-      cout<<"n="<<i1<<endl<<endl;
+      cout<<endl<<"n="<<i1<<endl<<endl;
       //print table header
+      cout<<"| k\\ d_x ";
+      for ( int j = 1 ; j< i1+1 ; j++)
+	cout<<"| "<<j;
+      cout<<"|"<<endl;
       for ( int j = 0 ; j< i1+1 ; j++)
 	cout<<"|-";
       cout<<"|"<<endl;
@@ -48,7 +52,7 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
       }
     }
     cout<<endl;
-    cout<<"input case: n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<endl;
+    //    cout<<"input case: n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<endl;
   }    
     break;
   }
