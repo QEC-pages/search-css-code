@@ -14,6 +14,9 @@ command=$(CXX) $(START) -o $@ $< $(word 2,$^) $(word 4, $^) $(word 6, $^) $(word
 #	$(command)
 css.out:css.c $(files)
 	$(command) -fopenmp
+show-log:
+	make css.out
+	./css.out mode=1  debug=2 n_low=5 n_high=10
 
 test.out:test.c $(files)
 	$(command)
