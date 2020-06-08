@@ -65,9 +65,11 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
 //read distance saved in file
 void read_dist(mat & dist, int n){
   string filename="data/dist-size-"+to_string(n)+".mtx";
-  if (fopen(filename.c_str(), "r") == NULL) {
+  FILE *f;
+  if ( (f=fopen(filename.c_str(), "r") ) == NULL) {
     cout<<"No such file:"<<filename<<endl;
   }else{
+    fclose(f);
     dist = MM_to_mat(filename); 
   }
   return ;
