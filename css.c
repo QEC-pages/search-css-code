@@ -36,7 +36,7 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
     for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){
       cout<<endl<<"n="<<i1<<endl<<endl;
       //print table header
-      cout<<"| k\\ d_x ";
+      cout<<"| k \\ d_x ";
       for ( int j = 1 ; j< i1+1 ; j++)
 	cout<<"| "<<j;
       cout<<"|"<<endl;
@@ -44,9 +44,13 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
 	cout<<"|-";
       cout<<"|"<<endl;
       for ( int i2 = 1 ; i2<=i1-2 ; i2 ++ ){
-	cout<<"|k="<<i2;
-	for ( int i3 = 1 ; i3<=i1 ; i3 ++ ){	  	  
-	  cout<<"|("<<i3<<","<< dist_list[i1].get(i2,i3)<<")";
+	cout<<"| "<<i2;
+	for ( int i3 = 1 ; i3<=i1 ; i3 ++ ){
+	  if ( dist_list[i1].get(i2,i3) == 0 ){
+	    cout<<"| .";
+	  }else{
+	    cout<<"|"<< dist_list[i1].get(i2,i3)<<"";
+	  }
 	}
 	cout<<"|"<<endl;
       }
