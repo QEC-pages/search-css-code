@@ -9,7 +9,7 @@ This code produce two random quantum codes and construct concatenated codes and 
 //using namespace itpp;
 //using namespace std;
 const int MAX_SIZE=20;
-
+/*
 int print_array(int d[MAX_SIZE][MAX_SIZE][MAX_SIZE][2], int na_input, int na, int ka, int dax, int daz){
   //print
   cout<<"n,k,d k=1                   k=2                 k=3"<<endl;
@@ -32,7 +32,7 @@ int print_array(int d[MAX_SIZE][MAX_SIZE][MAX_SIZE][2], int na_input, int na, in
   cout<<"n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<endl;
   return 0;
 }
-
+*/
 void print_dist_list( std::vector<mat> & dist_list,  int na_input, int na, int ka, int dax, int daz){
   cout<<"n,k,d k=1                   k=2                 k=3"<<endl;
   if (true) {
@@ -66,7 +66,7 @@ void read_dist(mat & dist, int n){
   string filename="data/dist-size-"+to_string(n)+".mtx";
 
   if (fopen(filename.c_str(), "r") == NULL) {
-    cout<<"file open fail:"<<filename<<endl;
+    cout<<"No such file:"<<filename<<endl;
   }else{
     dist = MM_to_mat(filename); 
   }
@@ -123,13 +123,13 @@ int main(int args, char ** argv){
 
   //  mat dd;
   int dx_max=0, dz_max=0;
-  int d[MAX_SIZE][MAX_SIZE][MAX_SIZE][2];
+  /*  int d[MAX_SIZE][MAX_SIZE][MAX_SIZE][2];
   //init: n k d (dx, dz)
   for ( int i1 = 0 ; i1<=MAX_SIZE ; i1 ++ )
     for ( int i2 = 0 ; i2<=MAX_SIZE ; i2 ++ )
       for ( int i3 = 0 ; i3<=MAX_SIZE ; i3 ++ )
 	{ d[i1][i2][i3][0]=i3; d[i1][i2][i3][1]=0;}
-
+  */
 
   // convert format to imat
   std::vector<mat> dist_list;
@@ -138,11 +138,23 @@ int main(int args, char ** argv){
     mat distance(MAX_SIZE+1,MAX_SIZE+1);
     distance.zeros();
     read_dist(distance, i);   
-    std::cout<<" i = "<<i<<std::endl;
+
+    //fix 0
+    for ( int i1 =0; i1 < distance.rows();i1++) 
+      for ( int i2 =0; i2 < distance.cols();i2++) 
+	distance.set(i1,i2, (distance.get(i1,i2) <0.1)? 0 : distance.get(i1,i2) );
+    //  std::cout<<" i = "<<i<<std::endl;
     dist_list.push_back(distance);
+      
   }
 
-
+  //just print current result
+  if ( debug ){
+    print_dist_list(  dist_list , n_high , 0,0,0, 0);
+    if ( debug ==2 )
+      return 0;
+  }
+  
   //  print_array(d,na_input);
 
   if (debug)   cout<<"mode, title ->"<<mode<<endl<<title<<endl;
@@ -187,12 +199,12 @@ int main(int args, char ** argv){
       //      cout<<daz<<","<<d[na][ka][dax][1]<<endl;
       //      if ( daz > d[na][ka][dax][1] ){
       if ( daz > dist_list[na].get(ka,dax)){
-	d[na][ka][dax][1] = daz;
-	print_array(d,n_high, na,ka,dax, daz);
+	//	d[na][ka][dax][1] = daz;
+	//	print_array(d,n_high, na,ka,dax, daz);
 	//	cout<<"debug 2"<<endl;
 	dist_list[na].set(ka,dax,daz);
-	print_dist_list(  dist_list ,n_high, na,ka,dax, daz);
-
+	if (debug) print_dist_list(  dist_list ,n_high, na,ka,dax, daz);
+	cout<<"n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<", time: "<<timer.toc()<<endl;
 	write_dist(dist_list[na], na);
 	//	cout<<"debug 3"<<endl;
       }
