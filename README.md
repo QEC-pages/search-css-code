@@ -9,7 +9,7 @@ distance when repeated long enough. The convergence speed decay
 exponentially with code size.
 
 ## How to use
-a summary is given in [css.log](css.log) in increasing order of n, k. each entry is the maximum (d_x, d_z) found for that [n, k]. 0 means nothing found for that entry.
+a summary is given in [css.md](css.md) in increasing order of n, k. each entry is the maximum d\_z found for that [n, k, (d\_x)]. An empty entry  means nothing found for that entry.
 
 
 

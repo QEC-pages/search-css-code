@@ -17,7 +17,7 @@ css.out:css.c $(files)
 show-md:
 	make css.out
 	./css.out mode=1  debug=2 n_low=5 n_high=50 > css.md
-
+	gitpush "check md output"
 test.out:test.c $(files)
 	$(command)
 
