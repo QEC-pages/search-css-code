@@ -169,7 +169,7 @@ int main(int args, char ** argv){
 #pragma omp parallel for num_threads(num_core)
 	//      {
 	for ( int i =0; i<num_trial;i++){
-
+	  cout<<"*";
 	  GF2mat Gax,Gaz,Cax,Caz;
 	  GF2mat Gbx,Gbz,Cbx,Cbz;
 	  int na,ka, Gax_row,Gaz_row;//k is not necessary number of qubits
