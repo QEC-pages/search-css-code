@@ -117,6 +117,7 @@ int main(int args, char ** argv){
     distance.zeros();
     read_dist(distance, i);   
 
+    /*
     //fix 0, I keep getting wired value for 0, may because of openmp
     for ( int i1 =0; i1 < distance.rows();i1++) {
       for ( int i2 =0; i2 < distance.cols();i2++) {
@@ -125,6 +126,7 @@ int main(int args, char ** argv){
       }
     }
     write_dist(distance, i);   //write the file after fix zero
+    */
     dist_list.push_back(distance);      
   }
 
