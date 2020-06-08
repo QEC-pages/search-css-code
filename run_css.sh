@@ -1,7 +1,7 @@
 make css.out
 
-n_low=5
-n_high=30
+n_low=30
+n_high=50
 # na_input=10
 seed=999
 debug=0
