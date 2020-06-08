@@ -36,7 +36,7 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
     for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){
       cout<<endl<<"n="<<i1<<endl<<endl;
       //print table header
-      cout<<"| k \\ d_x ";
+      cout<<"| k,dx ";
       for ( int j = 1 ; j< i1+1 ; j++)
 	cout<<"| "<<j;
       cout<<"|"<<endl;
@@ -164,20 +164,15 @@ int main(int args, char ** argv){
 	  int dax = quantum_dist_v2(Gax,Gaz);
 	  int daz = quantum_dist_v2(Gax,Gaz,1);
 	  //found larger distance ( either d_x or d_z )
-	  if ( daz > dist_list[na].get(ka,dax)){
-	    dist_list[na].set(ka,dax,daz);
-	    if (debug) print_dist_list(  dist_list ,n_high, na,ka,dax, daz);
-	    cout<<"n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<", time: "<<timer.toc()<<endl;
-	    write_dist(dist_list[na], na);
+#pragma omp critical
+	  {
+	    if ( daz > dist_list[na].get(ka,dax)){
+	      dist_list[na].set(ka,dax,daz);
+	      if (debug) print_dist_list(  dist_list ,n_high, na,ka,dax, daz);
+	      cout<<"n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<", time: "<<timer.toc()<<endl;
+	      write_dist(dist_list[na], na);
+	    }
 	  }
-
-      //#pragma omp critical
-      //      {
-	//	i++
-
-	//	cout<<i<<"\t dax,daz="<<dax<<","<<daz<<", max dx, dz = "<<dx_max<<","<<dz_max<<".    ."<<endl;
-      //      }
-
 	}
 	break;//for switch statement
   }
