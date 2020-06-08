@@ -47,7 +47,7 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
 	cout<<"| "<<i2;
 	for ( int i3 = 1 ; i3<=i1 ; i3 ++ ){
 	  if ( dist_list[i1].get(i2,i3) == 0 ){
-	    cout<<"| .";
+	    cout<<"| ";
 	  }else{
 	    cout<<"|"<< dist_list[i1].get(i2,i3)<<"";
 	  }
