@@ -16,7 +16,7 @@ css.out:css.c $(files)
 	$(command) -fopenmp
 show-log:
 	make css.out
-	./css.out mode=1  debug=2 n_low=5 n_high=10
+	./css.out mode=1  debug=2 n_low=5 n_high=50
 
 test.out:test.c $(files)
 	$(command)
