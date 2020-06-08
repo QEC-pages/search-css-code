@@ -8,7 +8,7 @@ This code produce two random quantum codes and construct concatenated codes and 
 #include <vector>
 //using namespace itpp;
 //using namespace std;
-const int MAX_SIZE=20;
+const int MAX_SIZE=100;
 /*
 int print_array(int d[MAX_SIZE][MAX_SIZE][MAX_SIZE][2], int na_input, int na, int ka, int dax, int daz){
   //print
@@ -33,7 +33,7 @@ int print_array(int d[MAX_SIZE][MAX_SIZE][MAX_SIZE][2], int na_input, int na, in
   return 0;
 }
 */
-void print_dist_list( std::vector<mat> & dist_list,  int na_input, int na, int ka, int dax, int daz){
+void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka, int dax, int daz){
   cout<<"n,k,d k=1                   k=2                 k=3"<<endl;
   if (true) {
     for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){
@@ -140,9 +140,13 @@ int main(int args, char ** argv){
     read_dist(distance, i);   
 
     //fix 0
-    for ( int i1 =0; i1 < distance.rows();i1++) 
-      for ( int i2 =0; i2 < distance.cols();i2++) 
-	distance.set(i1,i2, (distance.get(i1,i2) <0.1)? 0 : distance.get(i1,i2) );
+    for ( int i1 =0; i1 < distance.rows();i1++) {
+      for ( int i2 =0; i2 < distance.cols();i2++) {
+	distance.set(i1,i2, (distance.get(i1,i2) > MAX_SIZE)? 0 : distance.get(i1,i2) );
+    	distance.set(i1,i2, (distance.get(i1,i2) < 0.1 )? 0 : distance.get(i1,i2) );
+      }
+    }
+    write_dist(distance, i);   
     //  std::cout<<" i = "<<i<<std::endl;
     dist_list.push_back(distance);
       
