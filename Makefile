@@ -16,8 +16,11 @@ css.out:css.c $(files)
 	$(command) -fopenmp
 show-md:
 	make css.out
-	./css.out mode=1  debug=2 n_low=5 n_high=50 > css.md
-	gitpush "check md output"
+	date > css.md
+	./css.out mode=1  debug=2 n_low=5 n_high=50 >> css.md
+	git add css.md
+	git commit -m "check md output"
+	git push
 test.out:test.c $(files)
 	$(command)
 
