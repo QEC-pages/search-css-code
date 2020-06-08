@@ -147,14 +147,10 @@ int main(int args, char ** argv){
 	for ( int i =0; i<num_trial;i++){
 	  cout<<"*";
 	  GF2mat Gax,Gaz,Cax,Caz;
-	  //	  GF2mat Gbx,Gbz,Cbx,Cbz;
 	  int na,ka, Gax_row,Gaz_row;//k is not necessary number of qubits
-	  //	  int nb,kb, Gbx_row,Gbz_row;
-
 	  //	  na = na_input; 
 	  na=randi(n_low,n_high); 
 	  ka = randi(1,na-2);Gax_row=randi(1,na-ka-1); Gaz_row=na-ka-Gax_row;
-	  //      getGoodQuantumCode(na,Gax_row,Gaz_row,Gax,Gaz,Cax,Caz,debug);
 	  getRandomQuantumCode(na,Gax_row,Gaz_row,Gax,Gaz,Cax,Caz);
 
 	  if (! is_quantum_code(Gax,Gaz,Cax,Caz)) {
@@ -163,6 +159,7 @@ int main(int args, char ** argv){
 	  }
 	  int dax = quantum_dist_v2(Gax,Gaz);
 	  int daz = quantum_dist_v2(Gax,Gaz,1);
+	  
 	  //found larger distance ( either d_x or d_z )
 #pragma omp critical
 	  {
