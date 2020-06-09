@@ -1,4 +1,12 @@
-//Weilei Zeng, 2020
+/*
+#######################################
+## file: css.c                       ##
+## Tue Jun  9 00:12:37 PDT 2020	     ##
+## Author: Weilei Zeng               ##
+## https://weileizeng.com            ##
+## weilei.zeng@email.ucr.edu         ##
+#######################################
+*/
 /*
 search for random CSS code and give a table of parameter for [n k (d_x,d_z)]
  */
@@ -35,15 +43,6 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
     int temp;
     for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){//i1 -> n
       cout<<endl<<"n="<<i1<<endl<<endl;
-      /*      if ( i1 == 15 ) {
-	      cout<<"("
-		  << dist_list[i1-1].rows()<<","
-		  << dist_list[i1].rows()<<","
-		  <<endl;
-	      cout<<"```\n"<<dist_list[i1-1]<<endl;
-	      cout<<dist_list[i1]<<endl<<"```\n";
-      }*/
-
       
       //print table header
       cout<<"| k,dx ";
@@ -63,27 +62,18 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
 	  }else{
 	    cout<<"|"<< temp <<"";
 	  }
-	    //check n=14,15,16
-	  /*   if ( i1 == 15 ) {
-	      cout<<"("
-		  << dist_list[i1-1].get(i2,i3)<<","
-		  << temp
-		  <<")";
-
-		  }*/
-	  
 	}
 	cout<<"|"<<endl;
       }
     }
     cout<<endl;
-    //    cout<<"input case: n k d = "<<na<<","<<ka<<","<<dax<<","<<daz<<endl;
   }    
     break;
   }
   return;
 }
 
+//print a file literally
 int print_file(string filename){
   int c;
   FILE *fp;
@@ -152,31 +142,14 @@ int main(int args, char ** argv){
 
   Real_Timer timer;  timer.tic();
 
-
-  //  int dx_max=0, dz_max=0;
-
-  cout<<"<details>\n <summary>Click to expand the log!</summary> \n\n ```log";
-  
-  
+  cout<<"<details>\n <summary>Click to expand the log</summary> \n\n ```log";
   std::vector<mat> dist_list;
   for ( int i =0; i<MAX_SIZE; i++){
     mat distance(MAX_SIZE+1,MAX_SIZE+1);
     distance.zeros();
     read_dist(distance, i);   
-
-    /*
-    //fix 0, I keep getting wired value for 0, may because of openmp
-    for ( int i1 =0; i1 < distance.rows();i1++) {
-      for ( int i2 =0; i2 < distance.cols();i2++) {
-	distance.set(i1,i2, (distance.get(i1,i2) > MAX_SIZE)? 0 : distance.get(i1,i2) );
-    	distance.set(i1,i2, (distance.get(i1,i2) < 0.1 )? 0 : distance.get(i1,i2) );
-      }
-    }
-    write_dist(distance, i);   //write the file after fix zero
-    */
     dist_list.push_back(distance);      
   }
-
   cout<<"```\n\n</details>\n";
 
   //just print current result
@@ -202,7 +175,7 @@ int main(int args, char ** argv){
 	  //	  na = na_input; 
 	  na=randi(n_low,n_high); 
 	  ka = randi(1,na-2);Gax_row=randi(1,na-ka-1); Gaz_row=na-ka-Gax_row;
-#pragma omp critical
+	  //#pragma omp critical
 	  {
 	    getRandomQuantumCode(na,Gax_row,Gaz_row,Gax,Gaz,Cax,Caz);
 	  }
@@ -216,6 +189,7 @@ int main(int args, char ** argv){
 	  //found larger distance ( either d_x or d_z )
 #pragma omp critical
 	  {
+	    //TODO: use min weight decoder to verify the distance
 	    if ( daz > dist_list[na].get(ka,dax)){
 	      dist_list[na].set(ka,dax,daz);
 	      if (debug) print_dist_list(  dist_list ,n_high, na,ka,dax, daz);
