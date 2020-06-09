@@ -1,15 +1,10 @@
-Mon Jun  8 21:55:27 PDT 2020
-input seed: 1 --> converted seed:81781137
+Mon Jun  8 21:56:05 PDT 2020
+input seed: 1 --> converted seed:645018102
 No such file:data/dist-size-0.mtx
 No such file:data/dist-size-1.mtx
 No such file:data/dist-size-2.mtx
 No such file:data/dist-size-3.mtx
 No such file:data/dist-size-4.mtx
-No such file:data/dist-size-5.mtx
-No such file:data/dist-size-6.mtx
-No such file:data/dist-size-7.mtx
-No such file:data/dist-size-8.mtx
-No such file:data/dist-size-9.mtx
 No such file:data/dist-size-10.mtx
 No such file:data/dist-size-11.mtx
 No such file:data/dist-size-12.mtx
@@ -105,39 +100,39 @@ n=5
 
 | k,dx | 1| 2| 3| 4| 5|
 |-|-|-|-|-|-|
-| 1| | | | | |
-| 2| | | | | |
+| 1|3| | | | |
+| 2|2| | | | |
 | 3| | | | | |
 
 n=6
 
 | k,dx | 1| 2| 3| 4| 5| 6|
 |-|-|-|-|-|-|-|
-| 1| | | | | | |
-| 2| | | | | | |
+| 1|3| | | | | |
+| 2|2| | | | | |
 | 3| | | | | | |
-| 4| | | | | | |
+| 4|1| | | | | |
 
 n=7
 
 | k,dx | 1| 2| 3| 4| 5| 6| 7|
 |-|-|-|-|-|-|-|-|
-| 1| | | | | | | |
-| 2| | | | | | | |
-| 3| | | | | | | |
-| 4| | | | | | | |
-| 5| | | | | | | |
+| 1|1| | | | | | |
+| 2|3| | | | | | |
+| 3|1|1| | | | | |
+| 4|1| | | | | | |
+| 5|1| | | | | | |
 
 n=8
 
 | k,dx | 1| 2| 3| 4| 5| 6| 7| 8|
 |-|-|-|-|-|-|-|-|-|
 | 1| | | | | | | | |
-| 2| | | | | | | | |
+| 2| | |1| | | | | |
 | 3| | | | | | | | |
 | 4| | | | | | | | |
-| 5| | | | | | | | |
-| 6| | | | | | | | |
+| 5| |1| | | | | | |
+| 6|1| | | | | | | |
 
 n=9
 
@@ -149,7 +144,7 @@ n=9
 | 4| | | | | | | | | |
 | 5| | | | | | | | | |
 | 6| | | | | | | | | |
-| 7| | | | | | | | | |
+| 7|1| | | | | | | | |
 
 n=10
 
