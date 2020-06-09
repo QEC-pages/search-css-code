@@ -32,9 +32,19 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
   }
     break;
   case 1:{ //markdown table
-    
-    for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){
+    int temp;
+    for ( int i1 = 5 ; i1<=na_input ; i1 ++ ){//i1 -> n
       cout<<endl<<"n="<<i1<<endl<<endl;
+      /*      if ( i1 == 15 ) {
+	      cout<<"("
+		  << dist_list[i1-1].rows()<<","
+		  << dist_list[i1].rows()<<","
+		  <<endl;
+	      cout<<"```\n"<<dist_list[i1-1]<<endl;
+	      cout<<dist_list[i1]<<endl<<"```\n";
+      }*/
+
+      
       //print table header
       cout<<"| k,dx ";
       for ( int j = 1 ; j< i1+1 ; j++)
@@ -43,14 +53,25 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
       for ( int j = 0 ; j< i1+1 ; j++)
 	cout<<"|-";
       cout<<"|"<<endl;
-      for ( int i2 = 1 ; i2<=i1-2 ; i2 ++ ){
+      //print entries
+      for ( int i2 = 1 ; i2<=i1-2 ; i2 ++ ){ //i2 -> k
 	cout<<"| "<<i2;
-	for ( int i3 = 1 ; i3<=i1 ; i3 ++ ){
-	  if ( dist_list[i1].get(i2,i3) == 0 ){
+	for ( int i3 = 1 ; i3<=i1 ; i3 ++ ){ // i3 -> dx
+	  temp = dist_list[i1].get(i2,i3) ;
+	  if ( temp == 0 ){
 	    cout<<"| ";
 	  }else{
-	    cout<<"|"<< dist_list[i1].get(i2,i3)<<"";
+	    cout<<"|"<< temp <<"";
 	  }
+	    //check n=14,15,16
+	  /*   if ( i1 == 15 ) {
+	      cout<<"("
+		  << dist_list[i1-1].get(i2,i3)<<","
+		  << temp
+		  <<")";
+
+		  }*/
+	  
 	}
 	cout<<"|"<<endl;
       }
@@ -62,15 +83,36 @@ void print_dist_list( std::vector<mat> dist_list,  int na_input, int na, int ka,
   }
   return;
 }
+
+int print_file(string filename){
+  int c;
+  FILE *fp;
+  fp = fopen(filename.c_str(), "r");
+  if (fp)
+    {
+      while ((c = getc(fp)) != EOF)
+	putchar(c);
+      fclose(fp);
+    }
+  return 0;
+}
+
+
 //read distance saved in file
 void read_dist(mat & dist, int n){
   string filename="data/dist-size-"+to_string(n)+".mtx";
+  cout<<"read file: "<<filename.c_str()<<endl;
   FILE *f;
   if ( (f=fopen(filename.c_str(), "r") ) == NULL) {
     cout<<"No such file:"<<filename<<endl;
   }else{
     fclose(f);
-    dist = MM_to_mat(filename); 
+    //file exists; read and update
+    dist = MM_to_mat(filename);
+    /*    if ( n == 14 || n == 15 ) {
+      print_file(filename);
+      // cout<<"```\n n = "<<n<<"\n"<<dist<<endl<<"```\n";
+      }*/
   }
   return ;
 }
@@ -113,6 +155,9 @@ int main(int args, char ** argv){
 
   //  int dx_max=0, dz_max=0;
 
+  cout<<"<details>\n <summary>Click to expand the log!</summary> \n\n ```log";
+  
+  
   std::vector<mat> dist_list;
   for ( int i =0; i<MAX_SIZE; i++){
     mat distance(MAX_SIZE+1,MAX_SIZE+1);
@@ -131,6 +176,8 @@ int main(int args, char ** argv){
     */
     dist_list.push_back(distance);      
   }
+
+  cout<<"```\n\n</details>\n";
 
   //just print current result
   if ( debug ){
@@ -155,8 +202,10 @@ int main(int args, char ** argv){
 	  //	  na = na_input; 
 	  na=randi(n_low,n_high); 
 	  ka = randi(1,na-2);Gax_row=randi(1,na-ka-1); Gaz_row=na-ka-Gax_row;
-	  getRandomQuantumCode(na,Gax_row,Gaz_row,Gax,Gaz,Cax,Caz);
-
+#pragma omp critical
+	  {
+	    getRandomQuantumCode(na,Gax_row,Gaz_row,Gax,Gaz,Cax,Caz);
+	  }
 	  if (! is_quantum_code(Gax,Gaz,Cax,Caz)) {
 	    cout<<"not a quantum code"<<endl;
 	    throw "invalid code";

@@ -1,12 +1,9 @@
 %%MatrixMarket matrix coordinate real general
-101 101 10
-1 1 9.1753e-317
-2 1 9.1753e-317
-2 2 4
+101 101 7
+2 2 3
 2 3 2
 2 4 1
-2 5 1
 3 2 2
 3 3 2
-4 2 2
+4 2 1
 4 3 1
